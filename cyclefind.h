@@ -45,16 +45,13 @@ struct name {								\
 		(cf)->limit = (lim);					\
 	} while (0 /*CONSTCOND*/)
 
-#define CYCLEFIND_LIMIT(cf)						\
+#define CYCLEFIND_OVERLIMIT(cf)						\
 	((cf)->n >= (cf)->limit)
 
-#define CYCLEFIND_TEST(cf, ctxp)						\
+#define CYCLEFIND_TEST(cf, ctxp)					\
 	(								\
-	 (								\
-	  (CYCLEFIND_LIMIT(cf) ||					\
-	  ((cf)->n != 0 &&						\
-	   memcmp(&(cf)->ctx, ctxp, sizeof((cf)->ctx)) == 0))		\
-	 ) ?								\
+	 ((cf)->n != 0 &&						\
+	   memcmp(&(cf)->ctx, ctxp, sizeof((cf)->ctx)) == 0) ?		\
 	 (((cf)->n) - ((cf)->n2 / 2) + 1) :				\
 	 ((cf)->n++, ((cf)->n == (cf)->n2) && ((cf)->n2 <<= 1,		\
 	  memcpy(&(cf)->ctx, ctxp, sizeof((cf)->ctx)), 0))		\

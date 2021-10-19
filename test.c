@@ -41,6 +41,11 @@ main(int argc, char *argv[])
 	CYCLEFIND_INIT(&cf, 10000);
 	for (e = listhead; e != NULL; e = e->next) {
 		int n;
+		if (CYCLEFIND_OVERLIMIT(&cf)) {
+			printf("Overlimited. break\n");
+			break;
+		}
+
 		if ((n = CYCLEFIND_TEST(&cf, e)) != 0) {
 			printf("Looped! last %d link looped\n", n);
 			break;
